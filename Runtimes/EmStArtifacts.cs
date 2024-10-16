@@ -39,7 +39,7 @@ namespace SignalMath
         public void SetHammingWinSpect()
         {
             OpStatus op = new OpStatus();
-            EmotionalMathSDKApi.Inst.MathLibSetHanningWinSpect(_emStPtr, ref op);
+            EmotionalMathSDKApi.Inst.MathLibSetHammingWinSpect(_emStPtr, ref op);
             ThrowIfError(op);
         }
         public void SetCallibrationLength(int s)

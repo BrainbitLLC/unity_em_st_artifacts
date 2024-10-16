@@ -1,0 +1,6 @@
+framework module EmStArtifacts {
+  umbrella header "EMMathLibModuleExport.h"
+
+  export *
+  module * { export * }
+}

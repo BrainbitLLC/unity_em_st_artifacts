@@ -246,8 +246,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return DefaultImpl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -453,8 +453,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return WinX86Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -660,8 +660,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return WinX64Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -867,8 +867,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return WinArmImpl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -1074,8 +1074,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return WinArm64Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -1281,8 +1281,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return iOSImpl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -1332,62 +1332,11 @@ namespace SignalMath
     }
     public class AndroidARMv7Impl : IEmotionalMathSDKApi
     {
-        [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-        private struct MathLibSettingNative
-        {
-            public MathLibSettingNative(MathLibSetting setting)
-            {
-                sampling_rate = setting.sampling_rate;
-                process_win_freq = setting.process_win_freq;
-                fft_window = setting.fft_window;
-                n_first_sec_skipped = setting.n_first_sec_skipped;
-                bipolar_mode = setting.bipolar_mode ? 1 : 0;
-                channels_number = setting.channels_number;
-                channel_for_analysis = setting.channel_for_analysis;
-            }
-
-            public Int32 sampling_rate;
-            public Int32 process_win_freq;
-            public Int32 fft_window;
-            public Int32 n_first_sec_skipped;
-            public Int32 bipolar_mode;
-            public Int32 channels_number;
-            public Int32 channel_for_analysis;
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-        private struct ArtifactDetectSettingNative
-        {
-            public ArtifactDetectSettingNative(ArtifactDetectSetting setting)
-            {
-                art_bord = setting.art_bord;
-                allowed_percent_artpoints = setting.allowed_percent_artpoints;
-                raw_betap_limit = setting.raw_betap_limit;
-                total_pow_border = setting.total_pow_border;
-                global_artwin_sec = setting.global_artwin_sec;
-                spect_art_by_totalp = setting.spect_art_by_totalp ? 1 : 0;
-                hanning_win_spectrum = setting.hanning_win_spectrum ? 1 : 0;
-                hamming_win_spectrum = setting.hamming_win_spectrum ? 1 : 0;
-                num_wins_for_quality_avg = setting.num_wins_for_quality_avg;
-            }
-
-            public Int32 art_bord;
-            public Int32 allowed_percent_artpoints;
-            public Int32 raw_betap_limit;
-            public Int32 total_pow_border;
-            public Int32 global_artwin_sec;
-            public Int32 spect_art_by_totalp;
-            public Int32 hanning_win_spectrum;
-            public Int32 hamming_win_spectrum;
-            public Int32 num_wins_for_quality_avg;
-        }
-
-
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
-        private static extern IntPtr n_createMathLib(MathLibSettingNative lib_setting, ArtifactDetectSettingNative art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
+        private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
         {
-            return n_createMathLib(new MathLibSettingNative(lib_setting), new ArtifactDetectSettingNative(art_setting), short_art_setting, mental_spectral_setting, ref opResult);
+            return n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
@@ -1538,8 +1487,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return AndroidARMv7Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -1589,62 +1538,11 @@ namespace SignalMath
     }
     public class AndroidARMv8Impl : IEmotionalMathSDKApi
     {
-        [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-        private struct MathLibSettingNative
-        {
-            public MathLibSettingNative(MathLibSetting setting)
-            {
-                sampling_rate = setting.sampling_rate;
-                process_win_freq = setting.process_win_freq;
-                fft_window = setting.fft_window;
-                n_first_sec_skipped = setting.n_first_sec_skipped;
-                bipolar_mode = setting.bipolar_mode ? 1 : 0;
-                channels_number = setting.channels_number;
-                channel_for_analysis = setting.channel_for_analysis;
-            }
-
-            public Int32 sampling_rate;
-            public Int32 process_win_freq;
-            public Int32 fft_window;
-            public Int32 n_first_sec_skipped;
-            public Int32 bipolar_mode;
-            public Int32 channels_number;
-            public Int32 channel_for_analysis;
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-        private struct ArtifactDetectSettingNative
-        {
-            public ArtifactDetectSettingNative(ArtifactDetectSetting setting)
-            {
-                art_bord = setting.art_bord;
-                allowed_percent_artpoints = setting.allowed_percent_artpoints;
-                raw_betap_limit = setting.raw_betap_limit;
-                total_pow_border = setting.total_pow_border;
-                global_artwin_sec = setting.global_artwin_sec;
-                spect_art_by_totalp = setting.spect_art_by_totalp ? 1 : 0;
-                hanning_win_spectrum = setting.hanning_win_spectrum ? 1 : 0;
-                hamming_win_spectrum = setting.hamming_win_spectrum ? 1 : 0;
-                num_wins_for_quality_avg = setting.num_wins_for_quality_avg;
-            }
-
-            public Int32 art_bord;
-            public Int32 allowed_percent_artpoints;
-            public Int32 raw_betap_limit;
-            public Int32 total_pow_border;
-            public Int32 global_artwin_sec;
-            public Int32 spect_art_by_totalp;
-            public Int32 hanning_win_spectrum;
-            public Int32 hamming_win_spectrum;
-            public Int32 num_wins_for_quality_avg;
-        }
-
-
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
-        private static extern IntPtr n_createMathLib(MathLibSettingNative lib_setting, ArtifactDetectSettingNative art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
+        private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
         {
-            return n_createMathLib(new MathLibSettingNative(lib_setting), new ArtifactDetectSettingNative(art_setting), short_art_setting, mental_spectral_setting, ref opResult);
+            return n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
@@ -1795,8 +1693,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return AndroidARMv8Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -1846,63 +1744,11 @@ namespace SignalMath
     }
     public class AndroidX86Impl : IEmotionalMathSDKApi
     {
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-        private struct MathLibSettingNative
-        {
-            public MathLibSettingNative(MathLibSetting setting)
-            {
-                sampling_rate = setting.sampling_rate;
-                process_win_freq = setting.process_win_freq;
-                fft_window = setting.fft_window;
-                n_first_sec_skipped = setting.n_first_sec_skipped;
-                bipolar_mode = setting.bipolar_mode ? 1 : 0;
-                channels_number = setting.channels_number;
-                channel_for_analysis = setting.channel_for_analysis;
-            }
-
-            public Int32 sampling_rate;
-            public Int32 process_win_freq;
-            public Int32 fft_window;
-            public Int32 n_first_sec_skipped;
-            public Int32 bipolar_mode;
-            public Int32 channels_number;
-            public Int32 channel_for_analysis;
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-        private struct ArtifactDetectSettingNative
-        {
-            public ArtifactDetectSettingNative(ArtifactDetectSetting setting)
-            {
-                art_bord = setting.art_bord;
-                allowed_percent_artpoints = setting.allowed_percent_artpoints;
-                raw_betap_limit = setting.raw_betap_limit;
-                total_pow_border = setting.total_pow_border;
-                global_artwin_sec = setting.global_artwin_sec;
-                spect_art_by_totalp = setting.spect_art_by_totalp ? 1 : 0;
-                hanning_win_spectrum = setting.hanning_win_spectrum ? 1 : 0;
-                hamming_win_spectrum = setting.hamming_win_spectrum ? 1 : 0;
-                num_wins_for_quality_avg = setting.num_wins_for_quality_avg;
-            }
-
-            public Int32 art_bord;
-            public Int32 allowed_percent_artpoints;
-            public Int32 raw_betap_limit;
-            public Int32 total_pow_border;
-            public Int32 global_artwin_sec;
-            public Int32 spect_art_by_totalp;
-            public Int32 hanning_win_spectrum;
-            public Int32 hamming_win_spectrum;
-            public Int32 num_wins_for_quality_avg;
-        }
-
-
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
-        private static extern IntPtr n_createMathLib(MathLibSettingNative lib_setting, ArtifactDetectSettingNative art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
+        private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
         {
-            return n_createMathLib(new MathLibSettingNative(lib_setting), new ArtifactDetectSettingNative(art_setting), short_art_setting, mental_spectral_setting, ref opResult);
+            return n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
@@ -2053,8 +1899,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return AndroidX86Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -2104,63 +1950,11 @@ namespace SignalMath
     }
     public class AndroidX64Impl : IEmotionalMathSDKApi
     {
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-        private struct MathLibSettingNative
-        {
-            public MathLibSettingNative(MathLibSetting setting)
-            {
-                sampling_rate = setting.sampling_rate;
-                process_win_freq = setting.process_win_freq;
-                fft_window = setting.fft_window;
-                n_first_sec_skipped = setting.n_first_sec_skipped;
-                bipolar_mode = setting.bipolar_mode ? 1 : 0;
-                channels_number = setting.channels_number;
-                channel_for_analysis = setting.channel_for_analysis;
-            }
-
-            public Int32 sampling_rate;
-            public Int32 process_win_freq;
-            public Int32 fft_window;
-            public Int32 n_first_sec_skipped;
-            public Int32 bipolar_mode;
-            public Int32 channels_number;
-            public Int32 channel_for_analysis;
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
-        private struct ArtifactDetectSettingNative
-        {
-            public ArtifactDetectSettingNative(ArtifactDetectSetting setting)
-            {
-                art_bord = setting.art_bord;
-                allowed_percent_artpoints = setting.allowed_percent_artpoints;
-                raw_betap_limit = setting.raw_betap_limit;
-                total_pow_border = setting.total_pow_border;
-                global_artwin_sec = setting.global_artwin_sec;
-                spect_art_by_totalp = setting.spect_art_by_totalp ? 1 : 0;
-                hanning_win_spectrum = setting.hanning_win_spectrum ? 1 : 0;
-                hamming_win_spectrum = setting.hamming_win_spectrum ? 1 : 0;
-                num_wins_for_quality_avg = setting.num_wins_for_quality_avg;
-            }
-
-            public Int32 art_bord;
-            public Int32 allowed_percent_artpoints;
-            public Int32 raw_betap_limit;
-            public Int32 total_pow_border;
-            public Int32 global_artwin_sec;
-            public Int32 spect_art_by_totalp;
-            public Int32 hanning_win_spectrum;
-            public Int32 hamming_win_spectrum;
-            public Int32 num_wins_for_quality_avg;
-        }
-
-
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
-        private static extern IntPtr n_createMathLib(MathLibSettingNative lib_setting, ArtifactDetectSettingNative art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
+        private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
         {
-            return n_createMathLib(new MathLibSettingNative(lib_setting), new ArtifactDetectSettingNative(art_setting), short_art_setting, mental_spectral_setting, ref opResult);
+            return n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
@@ -2311,8 +2105,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return AndroidX64Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -2363,203 +2157,203 @@ namespace SignalMath
     public class OSXImpl : IEmotionalMathSDKApi
     {
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
         {
             return OSXImpl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
         {
             return OSXImpl.n_freeMathLib(mathLibPtr, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
         {
             return OSXImpl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
         }
 
-        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
+        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
         {
@@ -2725,8 +2519,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return LinuxX64Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }
@@ -2932,8 +2726,8 @@ namespace SignalMath
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
         {
             return LinuxX86Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
         }

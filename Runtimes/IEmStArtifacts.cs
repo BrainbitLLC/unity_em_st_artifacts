@@ -9,6 +9,7 @@ namespace SignalMath
     {
         public const string LibName = "em_st_artifacts";
         public const string LibNameiOS = "__Internal";
+        public const string LibNameMacOS = "__Internal";
         public const string LibNameWin32 = LibName + "-x86";
         public const string LibNameWin64 = LibName + "-x64";
         public const string LibNameWinArm = LibName + "-arm";

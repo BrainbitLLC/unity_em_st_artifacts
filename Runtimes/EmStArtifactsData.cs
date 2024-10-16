@@ -3,30 +3,47 @@ using System.Runtime.InteropServices;
 
 namespace SignalMath
 {
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct MathLibSetting
     {
-        public int sampling_rate;
-        public int process_win_freq;
-        public int fft_window;
-        public int n_first_sec_skipped;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint sampling_rate;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint process_win_freq;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint fft_window;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint n_first_sec_skipped;
+        [MarshalAs(UnmanagedType.I1)]
         public bool bipolar_mode;
-        public int channels_number;
-        public int channel_for_analysis;
+        [MarshalAs(UnmanagedType.I1)]
+        public bool squared_spectrum;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint channels_number;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint channel_for_analysis;
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct ArtifactDetectSetting
     {
-        public int art_bord;
-        public int allowed_percent_artpoints;
-        public int raw_betap_limit;
-        public int total_pow_border;
-        public int global_artwin_sec;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint art_bord;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint allowed_percent_artpoints;
+        public uint raw_betap_limit;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint total_pow_border;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint global_artwin_sec;
+        [MarshalAs(UnmanagedType.I1)]
         public bool spect_art_by_totalp;
+        [MarshalAs(UnmanagedType.I1)]
         public bool hanning_win_spectrum;
+        [MarshalAs(UnmanagedType.I1)]
         public bool hamming_win_spectrum;
-        public int num_wins_for_quality_avg;
+        [MarshalAs(UnmanagedType.U4)]
+        public uint num_wins_for_quality_avg;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]

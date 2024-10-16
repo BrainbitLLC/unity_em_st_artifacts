@@ -1,6 +1,6 @@
 {
   "name": "com.neurotech.emstartifacts",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "displayName": "EmStArtifacts",
   "description": "Algorithm for calculating emotional states",
   "dependencies": {},
@@ -10,8 +10,8 @@
     "neurotech"
   ],
   "author": {
-    "name": "Btainit LLC",
+    "name": "BrainBit Inc",
     "email": "support@brainbit.com",
-    "url": "https://gitlab.com/neurosdk2/neurosamples"
+    "url": "https://sdk.brainbit.com/lib-emotions/"
   }
 }
