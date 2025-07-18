@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SignalMath
 {
@@ -46,7 +49,7 @@ namespace SignalMath
         public uint num_wins_for_quality_avg;
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct ShortArtifactDetectSetting
     {
         public int ampl_art_detect_win_size;
@@ -54,7 +57,7 @@ namespace SignalMath
         public int ampl_art_extremum_border;
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct MentalAndSpectralSetting
     {
         public int n_sec_for_instant_estimation;
@@ -87,6 +90,7 @@ namespace SignalMath
         public double InstAttention;
         public double InstRelaxation;
     }
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct RawSpectVals
     {
@@ -111,6 +115,19 @@ namespace SignalMath
         NONE
     }
 
+    public enum BraintSideTypes
+    {
+        LEFT,
+        RIGHT,
+    }
+
+    public enum ArtefactTypes
+    {
+        UNKNOWN = 0,
+        AMPLITUDE = 1,
+        SPECTRAL = 2,
+    }
+
     public struct RawChannelsArray
     {
         public double[] channels;
@@ -120,6 +137,18 @@ namespace SignalMath
     public struct RawChannelsArrayMarshal
     {
         public IntPtr channels;
+    }
+
+    public struct TotalPowValues
+    {
+        public double left;
+        public double right;
+    }
+
+    public struct QualityValues
+    {
+        public int left;
+        public int right;
     }
 
     /// <summary>
@@ -153,8 +182,7 @@ namespace SignalMath
             var samples = ManagedObj as RawChannelsArray[];
             if (samples == null)
                 return IntPtr.Zero;
-            int totalSize = 0;
-            foreach ( var ch in samples ) { totalSize += ch.channels.Length; }  // total channel's sample count
+            int totalSize = samples.Sum((ch) => ch.channels.Length);        // total channel's sample count
             int totalByte = sizeof(double) * totalSize;
             int sampleCount = samples.Length;
             var basePtr = Marshal.AllocHGlobal(totalByte);

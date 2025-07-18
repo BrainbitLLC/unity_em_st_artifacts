@@ -111,6 +111,7 @@ extern const MentalAndSpectralSetting MentalAndSpectralSettingDefault;
 	SDK_SHARED uint8_t MathLibSetHammingWinSpect(MathLib* mathLibPtr, EMOpStatus* opResult);
 	SDK_SHARED uint8_t MathLibSetCallibrationLength(MathLib* mathLibPtr, int s, EMOpStatus* opResult);
 	SDK_SHARED uint8_t MathLibSetSkipWinsAfterArtifact(MathLib* mathLibPtr, int nwins, EMOpStatus* opResult);
+	SDK_SHARED uint8_t MathLibUseInternalFilters(MathLib* mathLibPtr, bool use, EMOpStatus* opResult);
 
 	SDK_SHARED uint8_t MathLibPushData(MathLib* mathLibPtr, RawChannels* samples, size_t samplesCount, EMOpStatus* opResult);
 	SDK_SHARED uint8_t MathLibPushDataArr(MathLib* mathLibPtr, RawChannelsArray* samples, size_t samplesCount, EMOpStatus* opResult);
@@ -126,6 +127,8 @@ extern const MentalAndSpectralSetting MentalAndSpectralSettingDefault;
 	SDK_SHARED uint8_t MathLibIsArtifactedWin(MathLib* mathLibPtr, SideType side, bool print_info, bool* result, EMOpStatus* opResult);
 	SDK_SHARED uint8_t MathLibIsArtifactedSequence(MathLib* mathLibPtr,  bool* result, EMOpStatus* opResult);
 	SDK_SHARED uint8_t MathLibIsBothSidesArtifacted(MathLib* mathLibPtr, bool* result, EMOpStatus* opResult);
+	SDK_SHARED uint8_t MathLibIsArtifactedLeft(MathLib* mathLibPtr, bool* result, EMOpStatus* opResult);
+	SDK_SHARED uint8_t MathLibIsArtifactedRight(MathLib* mathLibPtr, bool* result, EMOpStatus* opResult);
 
 	SDK_SHARED uint8_t MathLibReadMentalDataArrSize(MathLib* mathLibPtr, int* arr_size, EMOpStatus* opResult);
     SDK_SHARED uint8_t MathLibReadMentalDataArr(MathLib* mathLibPtr, MindData* mindd, int* arr_size, EMOpStatus* opResult);
@@ -135,6 +138,10 @@ extern const MentalAndSpectralSetting MentalAndSpectralSettingDefault;
     SDK_SHARED uint8_t MathLibReadSpectralDataPercentsArrSize(MathLib* mathLibPtr, int* arr_size, EMOpStatus* opResult);
 	SDK_SHARED uint8_t MathLibReadSpectralDataPercentsArr(MathLib* mathLibPtr, SpectralDataPercents* spectraldata_arr, int* arr_size, EMOpStatus* opResult);
 	SDK_SHARED uint8_t MathLibReadRawSpectralVals(MathLib* mathLibPtr, RawSpectVals* raw_spectral_vals, EMOpStatus* opResult);
+	
+	SDK_SHARED uint8_t MathLibReadCalibrationVals(MathLib* mathLibPtr, RawSpectVals* calibration_vals, EMOpStatus* opResult);
+	SDK_SHARED uint8_t MathLibReadTotalPowFromArtifacts(MathLib* mathLibPtr, double* total_pow_left, double* total_pow_right, EMOpStatus* opResult);	
+	SDK_SHARED uint8_t MathLibGetEEGQuality(MathLib* mathLibPtr, int* q_left, int* q_right, EMOpStatus* opResult);
 
 	SDK_SHARED uint8_t MathLibSetZeroSpectWaves(MathLib* mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, EMOpStatus* opResult);
 	SDK_SHARED uint8_t MathLibSetWeightsForSpectra(MathLib* mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, EMOpStatus* opResult);

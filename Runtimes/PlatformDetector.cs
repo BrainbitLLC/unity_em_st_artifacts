@@ -11,7 +11,7 @@ using System.Text;
 
 namespace NativeLibSourceGeneratorShared
 {
-    internal enum NativePlatformType
+    public enum NativePlatformType
     {
         WinX86,
         WinX64,
@@ -29,10 +29,10 @@ namespace NativeLibSourceGeneratorShared
         LinuxArm64,
         Default
     }
-    internal static class Platform
+    public static class Platform
     {
         private static NativePlatformType? _platformType;
-        internal static NativePlatformType Type
+        public static NativePlatformType Type
         {
             get
             {
@@ -86,11 +86,11 @@ namespace NativeLibSourceGeneratorShared
             }
             else if (OperatingSystem.IsIOS())
             {
-                return PlatformType.iOS;
+                return NativePlatformType.iOS;
             }
             else if (OperatingSystem.IsMacOS())
             {
-                return PlatformType.OSX;
+                return NativePlatformType.OSX;
             }
             else if (OperatingSystem.IsLinux())
             {

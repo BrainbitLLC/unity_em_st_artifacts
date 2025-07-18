@@ -79,6 +79,19 @@ typedef NS_ENUM (UInt8, EMSideType) {
 -(id) initWithDelta:(double) delta andTheta:(double) theta andAlpha:(double) alpha andBeta:(double) beta andGamma:(double) gamma;
 @end
 
+@interface EMTotalPowVals: NSObject
+@property (nonatomic) double Left;
+@property (nonatomic) double Right;
+
+-(id) initWithLeftPow:(double) left andRight:(double) right;
+@end
+
+@interface EMQualityVals: NSObject
+@property (nonatomic) int Left;
+@property (nonatomic) int Right;
+
+-(id) initWithLeftQa:(int) left andRight:(int) right;
+@end
 
 
 #endif /* EMTypes_h */

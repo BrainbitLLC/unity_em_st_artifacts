@@ -5,7 +5,7 @@ using System.Text;
 namespace NativeLibSourceGeneratorShared
 {
     [AttributeUsage(AttributeTargets.Interface,AllowMultiple =true)]
-    internal class NativeLibAttribute : Attribute
+    public class NativeLibAttribute : Attribute
     {
         public string LibName { get; private set; }
         public NativePlatformType[] Platform { get; private set; }    

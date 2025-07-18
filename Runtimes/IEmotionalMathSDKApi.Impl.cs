@@ -22,7 +22,7 @@ namespace SignalMath
 
         private static readonly Lazy<IEmotionalMathSDKApi> _api = new Lazy<IEmotionalMathSDKApi>(() =>
         {
-            var platform = Platform.Type;
+            var platform = NativeLibSourceGeneratorShared.Platform.Type;
             try
             {
                 switch (platform)
@@ -31,13 +31,13 @@ namespace SignalMath
                     case NativePlatformType.WinArm64:
                     case NativePlatformType.WinX64:
                     case NativePlatformType.WinX86:
-                        Environment.SetEnvironmentVariable("PATH", $"{Path.Combine(GetApplicationRoot(), @"libs\windows")};{Environment.GetEnvironmentVariable("PATH")}"); // Not embed
+                        Environment.SetEnvironmentVariable("PATH", $"{ Path.Combine(GetApplicationRoot(), @"libs\windows") };{Environment.GetEnvironmentVariable("PATH")}"); // Not embed
                         break;
                     case NativePlatformType.LinuxArm:
                     case NativePlatformType.LinuxArm64:
                     case NativePlatformType.LinuxX64:
                     case NativePlatformType.LinuxX86:
-                        Environment.SetEnvironmentVariable("PATH", $"{Path.Combine(GetApplicationRoot(), @"libs\linux")};{Environment.GetEnvironmentVariable("PATH")}"); // Not embed
+                        Environment.SetEnvironmentVariable("PATH", $"{ Path.Combine(GetApplicationRoot(), @"libs\linux") };{Environment.GetEnvironmentVariable("PATH")}"); // Not embed
                         break;
                 }
             }
@@ -76,7 +76,7 @@ namespace SignalMath
 #if __IOS__
                     return new iOSImpl();
 #else
-                    return new DefaultImpl();
+                    return new  DefaultImpl();
 #endif
             }
             throw new NotSupportedException($"[OSDescription]:[{RuntimeInformation.OSDescription}]");
@@ -87,2692 +87,3242 @@ namespace SignalMath
             get => _api.Value;
         }
     }
-
+    
     public class DefaultImpl : IEmotionalMathSDKApi
     {
-
+        
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return DefaultImpl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return DefaultImpl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return DefaultImpl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return DefaultImpl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return DefaultImpl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return DefaultImpl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return DefaultImpl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return DefaultImpl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return DefaultImpl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return DefaultImpl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return DefaultImpl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class WinX86Impl : IEmotionalMathSDKApi
     {
-
+        
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return WinX86Impl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return WinX86Impl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return WinX86Impl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return WinX86Impl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return WinX86Impl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return WinX86Impl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return WinX86Impl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return WinX86Impl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return WinX86Impl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin32, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return WinX86Impl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return WinX86Impl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class WinX64Impl : IEmotionalMathSDKApi
     {
-
+        
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return WinX64Impl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return WinX64Impl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return WinX64Impl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return WinX64Impl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return WinX64Impl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return WinX64Impl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return WinX64Impl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return WinX64Impl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return WinX64Impl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWin64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return WinX64Impl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return WinX64Impl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class WinArmImpl : IEmotionalMathSDKApi
     {
-
+        
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return WinArmImpl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return WinArmImpl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return WinArmImpl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return WinArmImpl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return WinArmImpl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return WinArmImpl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return WinArmImpl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return WinArmImpl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return WinArmImpl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return WinArmImpl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return WinArmImpl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class WinArm64Impl : IEmotionalMathSDKApi
     {
-
+        
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return WinArm64Impl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return WinArm64Impl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return WinArm64Impl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return WinArm64Impl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return WinArm64Impl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return WinArm64Impl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return WinArm64Impl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return WinArm64Impl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return WinArm64Impl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameWinArm64, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return WinArm64Impl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return WinArm64Impl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class iOSImpl : IEmotionalMathSDKApi
     {
-
+        
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return iOSImpl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return iOSImpl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return iOSImpl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return iOSImpl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return iOSImpl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return iOSImpl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return iOSImpl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return iOSImpl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return iOSImpl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return iOSImpl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return iOSImpl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return iOSImpl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return iOSImpl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return iOSImpl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return iOSImpl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return iOSImpl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return iOSImpl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return iOSImpl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return iOSImpl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return iOSImpl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return iOSImpl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return iOSImpl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return iOSImpl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return iOSImpl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return iOSImpl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return iOSImpl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return iOSImpl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibNameiOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return iOSImpl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return iOSImpl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class AndroidARMv7Impl : IEmotionalMathSDKApi
     {
+        
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return AndroidARMv7Impl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return AndroidARMv7Impl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return AndroidARMv7Impl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return AndroidARMv7Impl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return AndroidARMv7Impl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return AndroidARMv7Impl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return AndroidARMv7Impl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return AndroidARMv7Impl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return AndroidARMv7Impl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class AndroidARMv8Impl : IEmotionalMathSDKApi
     {
+        
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return AndroidARMv8Impl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return AndroidARMv8Impl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return AndroidARMv8Impl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return AndroidARMv8Impl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return AndroidARMv8Impl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return AndroidARMv8Impl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return AndroidARMv8Impl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return AndroidARMv8Impl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return AndroidARMv8Impl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class AndroidX86Impl : IEmotionalMathSDKApi
     {
+        
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return AndroidX86Impl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return AndroidX86Impl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return AndroidX86Impl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return AndroidX86Impl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return AndroidX86Impl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return AndroidX86Impl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return AndroidX86Impl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return AndroidX86Impl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return AndroidX86Impl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return AndroidX86Impl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return AndroidX86Impl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class AndroidX64Impl : IEmotionalMathSDKApi
     {
+        
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return AndroidX64Impl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return AndroidX64Impl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return AndroidX64Impl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return AndroidX64Impl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return AndroidX64Impl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return AndroidX64Impl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return AndroidX64Impl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return AndroidX64Impl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return AndroidX64Impl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return AndroidX64Impl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return AndroidX64Impl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class OSXImpl : IEmotionalMathSDKApi
     {
-
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
+        
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return OSXImpl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return OSXImpl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return OSXImpl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return OSXImpl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return OSXImpl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return OSXImpl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return OSXImpl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return OSXImpl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return OSXImpl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return OSXImpl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return OSXImpl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return OSXImpl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return OSXImpl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return OSXImpl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return OSXImpl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return OSXImpl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return OSXImpl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return OSXImpl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return OSXImpl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return OSXImpl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return OSXImpl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return OSXImpl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return OSXImpl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return OSXImpl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return OSXImpl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return OSXImpl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return OSXImpl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
-        [DllImport(EmStLibNamePropvider.LibNameMacOS, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return OSXImpl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return OSXImpl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class LinuxX64Impl : IEmotionalMathSDKApi
     {
-
+        
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return LinuxX64Impl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return LinuxX64Impl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return LinuxX64Impl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return LinuxX64Impl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return LinuxX64Impl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return LinuxX64Impl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return LinuxX64Impl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return LinuxX64Impl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return LinuxX64Impl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return LinuxX64Impl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return LinuxX64Impl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
     public class LinuxX86Impl : IEmotionalMathSDKApi
     {
-
+        
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "createMathLib")]
         private static extern IntPtr n_createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult);
         public IntPtr createMathLib(MathLibSetting lib_setting, ArtifactDetectSetting art_setting, ShortArtifactDetectSetting short_art_setting, MentalAndSpectralSetting mental_spectral_setting, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_createMathLib(lib_setting, art_setting, short_art_setting, mental_spectral_setting, ref opResult);
+        { 
+           return LinuxX86Impl.n_createMathLib( lib_setting, art_setting, short_art_setting, mental_spectral_setting,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "freeMathLib")]
         private static extern byte n_freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte freeMathLib(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_freeMathLib(mathLibPtr, ref opResult);
+        { 
+           return LinuxX86Impl.n_freeMathLib( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetMentalEstimationMode")]
         private static extern byte n_MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult);
         public byte MathLibSetMentalEstimationMode(IntPtr mathLibPtr, bool independent, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetMentalEstimationMode(mathLibPtr, independent, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetMentalEstimationMode( mathLibPtr, independent,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHanningWinSpect")]
         private static extern byte n_MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHanningWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetHanningWinSpect(mathLibPtr, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetHanningWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetHammingWinSpect")]
         private static extern byte n_MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibSetHammingWinSpect(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetHammingWinSpect(mathLibPtr, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetHammingWinSpect( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetCallibrationLength")]
         private static extern byte n_MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult);
         public byte MathLibSetCallibrationLength(IntPtr mathLibPtr, int s, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetCallibrationLength(mathLibPtr, s, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetCallibrationLength( mathLibPtr, s,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSkipWinsAfterArtifact")]
         private static extern byte n_MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult);
         public byte MathLibSetSkipWinsAfterArtifact(IntPtr mathLibPtr, int nwins, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetSkipWinsAfterArtifact(mathLibPtr, nwins, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetSkipWinsAfterArtifact( mathLibPtr, nwins,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibUseInternalFilters")]
+        private static extern byte n_MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult);
+        public byte MathLibUseInternalFilters(IntPtr mathLibPtr, bool use, ref OpStatus opResult)
+        { 
+           return LinuxX86Impl.n_MathLibUseInternalFilters( mathLibPtr, use,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushData")]
         private static extern byte n_MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushData(IntPtr mathLibPtr, [In] RawChannels[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibPushData(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibPushData( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibPushDataArr")]
         private static extern byte n_MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult);
         public byte MathLibPushDataArr(IntPtr mathLibPtr, [In, Out][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RawChannelsArrayMarshaller))] RawChannelsArray[] samples, int samplesCount, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibPushDataArr(mathLibPtr, samples, samplesCount, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibPushDataArr( mathLibPtr, samples, samplesCount,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessWindow")]
         private static extern byte n_MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessWindow(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibProcessWindow(mathLibPtr, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibProcessWindow( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessData")]
         private static extern byte n_MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibProcessData(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibProcessData(mathLibPtr, side, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibProcessData( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibProcessDataArr")]
         private static extern byte n_MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibProcessDataArr(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibProcessDataArr(mathLibPtr, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibProcessDataArr( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetPrioritySide")]
         private static extern byte n_MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult);
         public byte MathLibSetPrioritySide(IntPtr mathLibPtr, SideType side, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetPrioritySide(mathLibPtr, side, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetPrioritySide( mathLibPtr, side,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibStartCalibration")]
         private static extern byte n_MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult);
         public byte MathLibStartCalibration(IntPtr mathLibPtr, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibStartCalibration(mathLibPtr, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibStartCalibration( mathLibPtr,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibCalibrationFinished")]
         private static extern byte n_MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibCalibrationFinished(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibCalibrationFinished(mathLibPtr, ref result, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibCalibrationFinished( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedWin")]
         private static extern byte n_MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedWin(IntPtr mathLibPtr, SideType side, bool print_info, ref bool result, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibIsArtifactedWin(mathLibPtr, side, print_info, ref result, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibIsArtifactedWin( mathLibPtr, side, print_info,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedSequence")]
         private static extern byte n_MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsArtifactedSequence(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibIsArtifactedSequence(mathLibPtr, ref result, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibIsArtifactedSequence( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsBothSidesArtifacted")]
         private static extern byte n_MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
         public byte MathLibIsBothSidesArtifacted(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibIsBothSidesArtifacted(mathLibPtr, ref result, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibIsBothSidesArtifacted( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedLeft")]
+        private static extern byte n_MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedLeft(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return LinuxX86Impl.n_MathLibIsArtifactedLeft( mathLibPtr,ref result,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibIsArtifactedRight")]
+        private static extern byte n_MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult);
+        public byte MathLibIsArtifactedRight(IntPtr mathLibPtr, ref bool result, ref OpStatus opResult)
+        { 
+           return LinuxX86Impl.n_MathLibIsArtifactedRight( mathLibPtr,ref result,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArrSize")]
         private static extern byte n_MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibReadMentalDataArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibReadMentalDataArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadMentalDataArr")]
         private static extern byte n_MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadMentalDataArr(IntPtr mathLibPtr, [In, Out] MindData[] mindd, ref int arr_size, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibReadMentalDataArr(mathLibPtr, mindd, ref arr_size, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibReadMentalDataArr( mathLibPtr, mindd,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadAverageMentalData")]
         private static extern byte n_MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
         public byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibReadAverageMentalData(mathLibPtr, n_lastwins_toaverage, ref minddatavals, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibReadAverageMentalData( mathLibPtr, n_lastwins_toaverage,ref minddatavals,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArrSize")]
         private static extern byte n_MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
         public byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibReadSpectralDataPercentsArrSize(mathLibPtr, ref arr_size, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibReadSpectralDataPercentsArrSize( mathLibPtr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadSpectralDataPercentsArr")]
-        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
-        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibReadSpectralDataPercentsArr(mathLibPtr, spectraldata_arr, ref arr_size, ref opResult);
+        private static extern byte n_MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        public byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult)
+        { 
+           return LinuxX86Impl.n_MathLibReadSpectralDataPercentsArr( mathLibPtr, spectraldata_arr,ref arr_size,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadRawSpectralVals")]
         private static extern byte n_MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
         public byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibReadRawSpectralVals(mathLibPtr, ref raw_spectral_vals, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibReadRawSpectralVals( mathLibPtr,ref raw_spectral_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadCalibrationVals")]
+        private static extern byte n_MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
+        public byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult)
+        { 
+           return LinuxX86Impl.n_MathLibReadCalibrationVals( mathLibPtr,ref calibration_vals,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibReadTotalPowFromArtifacts")]
+        private static extern byte n_MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult);
+        public byte MathLibReadTotalPowFromArtifacts(IntPtr mathLibPtr, ref double total_pow_left, ref double total_pow_right, ref OpStatus opResult)
+        { 
+           return LinuxX86Impl.n_MathLibReadTotalPowFromArtifacts( mathLibPtr,ref total_pow_left,ref total_pow_right,ref opResult); 
+        }
+
+        [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetEEGQuality")]
+        private static extern byte n_MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult);
+        public byte MathLibGetEEGQuality(IntPtr mathLibPtr, ref int q_left, ref int q_right, ref OpStatus opResult)
+        { 
+           return LinuxX86Impl.n_MathLibGetEEGQuality( mathLibPtr,ref q_left,ref q_right,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetZeroSpectWaves")]
         private static extern byte n_MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult);
         public byte MathLibSetZeroSpectWaves(IntPtr mathLibPtr, bool active, int delta, int theta, int alpha, int beta, int gamma, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetZeroSpectWaves(mathLibPtr, active, delta, theta, alpha, beta, gamma, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetZeroSpectWaves( mathLibPtr, active, delta, theta, alpha, beta, gamma,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetWeightsForSpectra")]
         private static extern byte n_MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult);
         public byte MathLibSetWeightsForSpectra(IntPtr mathLibPtr, double delta_c, double theta_c, double alpha_c, double beta_c, double gamma_c, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetWeightsForSpectra(mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetWeightsForSpectra( mathLibPtr, delta_c, theta_c, alpha_c, beta_c, gamma_c,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByBandsWidth")]
         private static extern byte n_MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByBandsWidth(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetSpectNormalizationByBandsWidth(mathLibPtr, fl, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetSpectNormalizationByBandsWidth( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibSetSpectNormalizationByCoeffs")]
         private static extern byte n_MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult);
         public byte MathLibSetSpectNormalizationByCoeffs(IntPtr mathLibPtr, bool fl, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibSetSpectNormalizationByCoeffs(mathLibPtr, fl, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibSetSpectNormalizationByCoeffs( mathLibPtr, fl,ref opResult); 
         }
 
         [DllImport(EmStLibNamePropvider.LibName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MathLibGetCallibrationPercents")]
         private static extern byte n_MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult);
         public byte MathLibGetCallibrationPercents(IntPtr mathLibPtr, ref int outPercents, ref OpStatus opResult)
-        {
-            return LinuxX86Impl.n_MathLibGetCallibrationPercents(mathLibPtr, ref outPercents, ref opResult);
+        { 
+           return LinuxX86Impl.n_MathLibGetCallibrationPercents( mathLibPtr,ref outPercents,ref opResult); 
         }
-
+ 
     }
 }

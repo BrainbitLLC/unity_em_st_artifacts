@@ -16,6 +16,7 @@
 -(void) setHammingWinSpect;
 -(void) setCallibrationLength:(int) len;
 -(void) setSkipWinsAfterArtifact:(int) nwins;
+-(void) useInternalFilters:(BOOL) use; // new
 
 
 -(void) pushData:(NSArray<EMRawChannels*>*) samples;
@@ -34,6 +35,8 @@
 -(BOOL) isArtifactedWinOnSide:(EMSideType) side andIsPrintInfo:(bool) print_info;
 -(BOOL) isArtifactedSequence;
 -(BOOL) isBothSidesArtifacted;
+-(BOOL) isArtifactedLeft; // new
+-(BOOL) isArtifactedRight; // new
 
 -(NSArray<EMMindData*>*) readMentalDataArr;
 
@@ -42,6 +45,10 @@
 -(NSArray<EMSpectralDataPercents*>*) MathLibReadSpectralDataPercentsArr;
 
 -(EMRawSpectVals*) readRawSpectralVals;
+
+-(EMRawSpectVals*) readCalibrationVals;
+-(EMTotalPowVals*) readTotalPowFromArtifacts;
+-(EMQualityVals*) getEEGQuality;
 
 -(void) setZeroSpectWavesWithActive:(BOOL) active andDelta:(UInt32) delta andTheta:(UInt32) theta andAlpha:(UInt32) alpha andBeta:(UInt32) beta andGamma:(UInt32) gamma;
 
