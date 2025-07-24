@@ -9,6 +9,7 @@ namespace SignalMath
     {
         public const string LibName = "em_st_artifacts";
         public const string LibNameiOS = "__Internal";
+        public const string LibNameOSX = "__Internal";
         public const string LibNameWin32 = LibName + "-x86";
         public const string LibNameWin64 = LibName + "-x64";
         public const string LibNameWinArm = LibName + "-arm";
@@ -63,7 +64,7 @@ namespace SignalMath
         byte MathLibReadAverageMentalData(IntPtr mathLibPtr, int n_lastwins_toaverage, ref MindData minddatavals, ref OpStatus opResult);
 
         byte MathLibReadSpectralDataPercentsArrSize(IntPtr mathLibPtr, ref int arr_size, ref OpStatus opResult);
-        byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
+        byte MathLibReadSpectralDataPercentsArr(IntPtr mathLibPtr, [In, Out] SpectralDataPercents[] spectraldata_arr, ref int arr_size, ref OpStatus opResult);
         byte MathLibReadRawSpectralVals(IntPtr mathLibPtr, ref RawSpectVals raw_spectral_vals, ref OpStatus opResult);
 
         byte MathLibReadCalibrationVals(IntPtr mathLibPtr, ref RawSpectVals calibration_vals, ref OpStatus opResult);
