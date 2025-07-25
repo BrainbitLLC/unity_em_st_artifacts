@@ -22,7 +22,7 @@ namespace SignalMath
 
         private static readonly Lazy<IEmotionalMathSDKApi> _api = new Lazy<IEmotionalMathSDKApi>(() =>
         {
-            var platform = Platform.Type;
+            var platform = NativeLibSourceGeneratorShared.Platform.Type;
             try
             {
                 switch (platform)
@@ -66,8 +66,10 @@ namespace SignalMath
                 case NativePlatformType.AndroidX64:
                     return new AndroidX64Impl();
                 case NativePlatformType.OSX:
-#if __IOS__
-                     return new OSXImpl();    
+#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+                    return new OSXImpl();
+#else
+                    break;
 #endif
                 case NativePlatformType.LinuxX64:
                     return new LinuxX64Impl();
@@ -2582,7 +2584,7 @@ namespace SignalMath
         }
  
     }
-#if __IOS__
+#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
     public class OSXImpl : IEmotionalMathSDKApi
     {
         
